@@ -36,7 +36,7 @@ var selectedView = {
         txtB.wordWrapWidth  = 350;
         txtB.wordWrap = true;
         txtB.x = game.width/2;
-        txtB.y = game.height/2-75;
+        txtB.y = game.height/2-50;
         txtB.inputEnabled = true;
         txtB.events.onInputOver.add(this.over, this);
         txtB.events.onInputOut.add(this.out, this);
@@ -48,7 +48,7 @@ var selectedView = {
         txtC.wordWrapWidth  = 350;
         txtC.wordWrap = true;
         txtC.x = game.width/2;
-        txtC.y = game.height/2;
+        txtC.y = game.height/2+50;
         txtC.inputEnabled = true;
         txtC.events.onInputOver.add(this.over, this);
         txtC.events.onInputOut.add(this.out, this);
@@ -60,7 +60,7 @@ var selectedView = {
         txtD.wordWrapWidth  = 350;
         txtD.wordWrap = true;
         txtD.x = game.width/2;
-        txtD.y = game.height/2+75;
+        txtD.y = game.height/2+150;
         txtD.inputEnabled = true;
         txtD.events.onInputOver.add(this.over, this);
         txtD.events.onInputOut.add(this.out, this);
