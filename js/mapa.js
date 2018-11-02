@@ -7,6 +7,7 @@ var mapa = {
 		game.load.image("floor", "images/floor.png");
 		game.load.image("question", "images/question.png");
 		game.load.image("coin", "images/coin.png");
+		game.load.image("radiactive", "images/radiactivo.png");
 		game.load.image("checkpoint", "images/checkpoint.png");
         
 		game.load.spritesheet("character", "images/characterSprite.png", 420, 491); 
@@ -42,15 +43,15 @@ var mapa = {
 
         floor = game.add.sprite(0, 756, "floor")
 
-        pointsMessage = game.add.text(20, 20, "Points: "+points, {font: "Bold Arial", fill: '#ffffff'});
+        pointsMessage = game.add.text(20, 20, "Puntos: "+points, {font: "Bold Arial", fill: '#ffffff'});
         pointsMessage.fontSize = 25;
 
-        levelMessage = game.add.text(300, 20, "Level: "+level, {font: "Bold Arial", fill: '#ffffff'});
+        levelMessage = game.add.text(300, 20, "Nivel: "+level, {font: "Bold Arial", fill: '#ffffff'});
         levelMessage.fontSize = 25;
 
-        livesMessage = game.add.text(580, 20, "Lives: "+lives, {font: "Bold Arial", fill: '#ffffff'});
+        livesMessage = game.add.text(580, 20, "Vidas: "+lives, {font: "Bold Arial", fill: '#ffffff'});
         livesMessage.fontSize = 25;
-        //Añadiendo grupo de sitios
+        //Añadiendo grupo de preguntas
         questions = game.add.group();
         questions.position.x = currentPosition*3;
 	    questions.physicsBodyType = Phaser.Physics.ARCADE;
@@ -95,6 +96,62 @@ var mapa = {
 
         questions.setAll('body.allowGravity', false);
 
+
+        //Añadiendo grupo de obstáculos
+        obstacles = game.add.group();
+        obstacles.position.x = currentPosition*3;
+	    obstacles.physicsBodyType = Phaser.Physics.ARCADE;
+
+		obstacles.enableBody = true;
+
+	    var obst1 = obstacles.create(700, 680, 'radiactive');
+        obst1.scale.setTo(0.3, 0.3); 
+
+	    var obst2 = obstacles.create(1370, 550, 'radiactive');
+        obst2.scale.setTo(0.3, 0.3); 
+
+	    var obst3 = obstacles.create(2170, 680, 'radiactive');
+        obst3.scale.setTo(0.3, 0.3); 
+
+        var obst4 = obstacles.create(3570, 680, 'radiactive');
+        obst4.scale.setTo(0.3, 0.3); 
+
+	    var obst5 = obstacles.create(4370, 550, 'radiactive');
+        obst5.scale.setTo(0.3, 0.3); 
+
+	    var obst6 = obstacles.create(5300, 680, 'radiactive');
+        obst6.scale.setTo(0.3, 0.3); 
+
+        var obst7 = obstacles.create(6570, 550, 'radiactive');
+        obst7.scale.setTo(0.3, 0.3); 
+
+	    var obst8 = obstacles.create(7500, 680, 'radiactive');
+        obst8.scale.setTo(0.3, 0.3); 
+
+	    var obst9 = obstacles.create(8170, 680, 'radiactive');
+        obst9.scale.setTo(0.3, 0.3); 
+
+        var obst10 = obstacles.create(2870, 640, 'radiactive');
+        obst10.scale.setTo(0.3, 0.3); 
+
+	    var obst11 = obstacles.create(5870, 680, 'radiactive');
+        obst11.scale.setTo(0.3, 0.3); 
+
+	    var obst12 = obstacles.create(8870, 680, 'radiactive');
+        obst12.scale.setTo(0.3, 0.3); 
+
+        var obst13 = obstacles.create(3240, 680, 'radiactive');
+        obst13.scale.setTo(0.3, 0.3); 
+
+	    var obst14 = obstacles.create(6240, 640, 'radiactive');
+        obst14.scale.setTo(0.3, 0.3); 
+
+	    var obst15 = obstacles.create(9240, 680, 'radiactive');
+        obst15.scale.setTo(0.3, 0.3); 
+
+        obstacles.setAll('body.allowGravity', false);
+
+		//grupo de checkpoints
         checkpoints = game.add.group();
 	    checkpoints.physicsBodyType = Phaser.Physics.ARCADE;
 		checkpoints.enableBody = true;
@@ -181,7 +238,7 @@ var mapa = {
         
         }
 		else if(jumpButton.isDown||up){
-			player.body.velocity.y = -300;
+			player.body.velocity.y = -500;
 
 	        if (facing == 'left')
 	        {
@@ -215,6 +272,7 @@ var mapa = {
     	}
     	game.physics.arcade.overlap(player, questions, this.questionCollision, null, this);
     	game.physics.arcade.overlap(player, checkpoints, this.checkpointCollision, null, this);
+    	game.physics.arcade.overlap(player, obstacles, this.obstacleCollision, null, this);
 	},
     //funciones para mover los objetos del mapa
 	 izquierda: function(){  
@@ -223,6 +281,7 @@ var mapa = {
             floor.position.x +=3;
             questions.position.x +=3;
             checkpoints.position.x +=3;
+            obstacles.position.x +=3;
 		 }
      },
 	 derecha: function(){  
@@ -231,6 +290,7 @@ var mapa = {
 			floor.position.x -=3;
             questions.position.x -=3;
             checkpoints.position.x -=3;
+            obstacles.position.x -=3;
 		 }
 	 },
     //función para volver al menu
@@ -246,10 +306,19 @@ var mapa = {
     },
     checkpointCollision: function(player, checkpoint){
     	level = checkpoint.key;
-    	levelMessage.setText("Level: "+ level);
+    	levelMessage.setText("Nivel: "+ level);
     	if(level == 4){
 	        game.state.start('win');    	
 	    }
+    	
+    },
+    obstacleCollision: function(player, obstacle){
+    	obstacle.kill();
+    	lives--;
+    	livesMessage.setText('Vidas: '+ lives);
+    	if(lives<=0){
+	        game.state.start('gameOver'); 
+    	}
     	
     }
 

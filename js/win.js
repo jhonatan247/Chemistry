@@ -7,7 +7,7 @@ var win = {
         
         
         game.stage.backgroundColor = '#212F3C';
-        var sText = 'congratulations, your score is '+points;
+        var sText = 'Felicidades, lograste '+points; +' puntos'
         var txtTitulo = game.add.text(game.width/2, game.height/2, sText, {font: "Arial", fill: '#ffffff', align:"center"});
         txtTitulo.fontSize = 40;
         txtTitulo.wordWrapWidth  = 700;

@@ -40,6 +40,7 @@ var gameCorrects = [2,3,2,2,1,1,0,2,3];
 var cursors;
 var jumpButton;
 var questions;
+var obstacles;
 
 var checkpoints;
 

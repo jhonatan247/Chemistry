@@ -13,9 +13,9 @@ var menu = {
 
 
         
-        var sText = 'Chemistry';
+        var sText = 'Refuerza tus conocimientos';
         var txtTitulo = game.add.text(game.width/2, game.height/2-100, sText, {font: "Arial", fill: '#ffffff', align:"center"});
-        txtTitulo.fontSize = 100;
+        txtTitulo.fontSize = 80;
         txtTitulo.wordWrapWidth  = 700;
         txtTitulo.wordWrap = true;
         txtTitulo.anchor.setTo(0.5);
