@@ -8,8 +8,17 @@ var selectedView = {
         
         background = game.add.tileSprite(0, 0, 1458, 820, "fondo");
         
-        var sText =gameQuestions[currentQuestion];
-        console.log(questions);
+        var sText =gameQuestions[currentQuestion][currentQuestionCoin];
+
+        pointsMessage = game.add.text(20, 20, "Puntos: "+points, {font: "Bold Arial", fill: '#ffffff'});
+        pointsMessage.fontSize = 25;
+
+        levelMessage = game.add.text(300, 20, "Nivel: "+level, {font: "Bold Arial", fill: '#ffffff'});
+        levelMessage.fontSize = 25;
+
+        livesMessage = game.add.text(580, 20, "Vidas: "+lives, {font: "Bold Arial", fill: '#ffffff'});
+        livesMessage.fontSize = 25;
+
         //añade el título
         var txtTitulo = game.add.text(game.width/2, game.height/2 -250, sText, {font: "Bold Arial", fill: '#ffffff', align:"center"});
         txtTitulo.fontSize = 35;
@@ -17,7 +26,7 @@ var selectedView = {
         txtTitulo.wordWrap = true;
         txtTitulo.anchor.setTo(0.5);
         
-        sText = 'a) '+gameAnswers[currentQuestion][0];
+        sText = 'a) '+gameAnswers[currentQuestion][currentQuestionCoin][0];
 
         var txtA = game.add.text(0, 0, sText , {font: "Arial", fill: '#ffffff', align:"left"});
         txtA.fontSize = 25;
@@ -30,7 +39,7 @@ var selectedView = {
         txtA.events.onInputOut.add(this.out, this);
         txtA.events.onInputDown.add(this.selectA, this);
 
-        sText = 'b) '+gameAnswers[currentQuestion][1];
+        sText = 'b) '+gameAnswers[currentQuestion][currentQuestionCoin][1];
         var txtB = game.add.text(0, 0, sText , {font: "Arial", fill: '#ffffff', align:"left"});
         txtB.fontSize = 25;
         txtB.wordWrapWidth  = 350;
@@ -42,7 +51,7 @@ var selectedView = {
         txtB.events.onInputOut.add(this.out, this);
         txtB.events.onInputDown.add(this.selectB, this);
 
-        sText = 'c) '+gameAnswers[currentQuestion][2];
+        sText = 'c) '+gameAnswers[currentQuestion][currentQuestionCoin][2];
         var txtC = game.add.text(0, 0, sText , {font: "Arial", fill: '#ffffff', align:"left"});
         txtC.fontSize = 25;
         txtC.wordWrapWidth  = 350;
@@ -54,7 +63,7 @@ var selectedView = {
         txtC.events.onInputOut.add(this.out, this);
         txtC.events.onInputDown.add(this.selectC, this);
 
-        sText = 'd) '+gameAnswers[currentQuestion][3];
+        sText = 'd) '+gameAnswers[currentQuestion][currentQuestionCoin][3];
         var txtD = game.add.text(0, 0, sText , {font: "Arial", fill: '#ffffff', align:"left"});
         txtD.fontSize = 25;
         txtD.wordWrapWidth  = 350;
@@ -66,7 +75,7 @@ var selectedView = {
         txtD.events.onInputOut.add(this.out, this);
         txtD.events.onInputDown.add(this.selectD, this);
         
-        var buttonExit = game.add.button(770, 50, "salir", this.goToBack, this);
+        var buttonExit = game.add.button(770, 50, "salir", this.goToGame, this);
         buttonExit.anchor.setTo(0.5);         
         buttonExit.scale.setTo(0.4, 0.4);  
         
@@ -82,59 +91,48 @@ var selectedView = {
         item.fill = "#ffffff";
     },
     selectA:function(){
-        if(gameCorrects[currentQuestion]==0){
+        if(gameCorrects[currentQuestion][currentQuestionCoin]==0){
             points+= 1000;
         }else{
             lives --;
         }
-        if(lives <= 0){
-            game.state.start('gameOver');
-        }else{
-            game.state.start('mapa');
-        }
+        this.goToGame();
     },
     selectB:function(){
-        if(gameCorrects[currentQuestion]==1){
+        if(gameCorrects[currentQuestion][currentQuestionCoin]==1){
             points+= 1000;
         }else{
             lives --;
         }
-        if(lives <= 0){
-            game.state.start('gameOver');
-        }else{
-            game.state.start('mapa');
-        }
+        this.goToGame();
     },
     selectC:function(){
-        if(gameCorrects[currentQuestion]==2){
+        if(gameCorrects[currentQuestion][currentQuestionCoin]==2){
             points+= 1000;
         }else{
             lives --;
         }
-        if(lives <= 0){
-            game.state.start('gameOver');
-        }else{
-            game.state.start('mapa');
-        }
+        this.goToGame();
     },
     selectD:function(){
-        if(gameCorrects[currentQuestion]==3){
+        if(gameCorrects[currentQuestion][currentQuestionCoin]==3){
             points+= 1000;
         }else{
             lives --;
         }
-        if(lives <= 0){
-            game.state.start('gameOver');
-        }else{
-            game.state.start('mapa');
-        }
+        this.goToGame();
     },
-    goToBack:function(){
-        lives--;
+    goToGame:function(){
         if(lives <= 0){
             game.state.start('gameOver');
         }else{
-            game.state.start('mapa');
+            currentQuestionCoin++;
+            if(currentQuestionCoin>=gameQuestions[currentQuestion].length){
+                currentQuestionCoin = 0;
+                game.state.start('mapa');
+            }else{
+                game.state.start('selectedView');
+            }
         }
     }
     
